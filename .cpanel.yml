@@ -2,8 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/miagrone/ventas.miagronegocio.com
-    - /bin/mkdir -p $DEPLOYPATH/public
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH/public
-    - /bin/cp .env.example $DEPLOYPATH/.env
-    - /bin/chmod 755 $DEPLOYPATH/.env
+  
