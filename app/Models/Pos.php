@@ -9,7 +9,21 @@ class Pos extends Model
 {
     use HasFactory;
     protected $table = 'venta';
-    protected $fillable = ['tipo_comprobante', 'serie_comprobante', 'num_comprobante', 'fecha', 'igv', 'total', 'estado', 'cliente_id', 'usuario_id'];
+    protected $fillable = [
+        'tipo_comprobante',
+        'serie_comprobante',
+        'num_comprobante',
+        'fecha',
+        'igv',
+        'total',
+        'estado',
+        'cliente_id',
+        'usuario_id',
+        'forma_pago',
+        'tipo_pago',
+        'ganancia_total',
+        'caja_id'
+    ];
     public $timestamps = false;
 
     public function detallesventa()

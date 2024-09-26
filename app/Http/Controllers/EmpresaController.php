@@ -10,96 +10,82 @@ use Illuminate\Http\Request;
 class EmpresaController extends Controller
 {
     //
-    public function show()
-    {
-        $empresa = Empresa::where('ruc', '20608731653')->first();
-        return view('empresa.create',compact('empresa'));
-    }
-    public function create(Request $request)
+    public function show(Request $request)
     {
 
-        $existingEmpresa = Empresa::where('ruc', $request->ruc)->first();
-
-        // Si existe, muestra un mensaje de error y detiene el proceso
-        if ($existingEmpresa) {
-            // Validar los datos del formulario
-            $request->validate([
-                'razon_social' => 'required|string|max:455',
-                'descripcion' => 'required|string|max:200',
-                'direccion' => 'required',
-                'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la foto, si es editable
-            ], [
-                'razon_social.required' => 'El campo Nombre es obligatorio',
-                'descripcion.required' => 'El campo descripción es requerido',
-                'direccion.required' => 'El campo dirección es requerido',
-                // Agrega otras reglas de validación según sea necesario
+        if ($request->ajax()) {
+            $empresa = Empresa::get();
+            // Devuelve los datos en formato JSON que DataTables espera
+            return response()->json([
+                'data' => $empresa
             ]);
-
-            // Actualizar los datos de la empresa con los valores del formulario
-             $existingEmpresa->razon_social = $request->razon_social;
-             $existingEmpresa->ruc = $request->ruc;
-             $existingEmpresa->descripcion = $request->descripcion;
-             $existingEmpresa->telefono = $request->telefono;
-             $existingEmpresa->direccion = $request->direccion;
-
-            // Si se proporcionó una nueva foto, actualizarla
-            if ($request->hasFile('logo')) {
-                $logo = $request->file('logo');
-                $nombrelogo = time() . '.' . $logo->getClientOriginalExtension();
-                $ruta = public_path('/empresa'); // Ruta donde deseas guardar la logo
-                $logo->move($ruta, $nombrelogo);
-                 $existingEmpresa->logo = $nombrelogo;
-            }
-
-            // Guardar los cambios en la base de datos
-             $existingEmpresa->save();
-
-            // Redirigir con un mensaje de éxito
-            return redirect()->route('empresa.view')->with('success', '¡La empresa se ha actualizado exitosamente!');
-
-           // return redirect()->back()->withErrors(['ruc' => 'Este RUC ya se encuentra registrado'])->withInput();
+        } else {
+            return view('empresa.empresa');
         }
+    }
+    public function edit($id)
+    {
+        $empresa = Empresa::findOrFail($id); // Utiliza el parámetro $id en lugar de $request->categoria_id
+        return response()->json($empresa);
+    }
+    public function update(Request $request, $id)
+    {
+        // Validar los datos recibidos
+        $validatedData = $request->validate(
+            [
+                'ruc' => 'required|string|max:20',
+                'razon_social' => 'required|string|max:180',
+                'nombre_comercial' => 'required|string|max:180',
+                'telefono' => 'required|string|max:20',
+                // Añade más campos según sea necesario
+            ],
+            [
+                'ruc.required' => 'El ruc/dni es requerido',
+                'razon_social.required' => 'Razon social es requerido',
+                'nombre_comercial.required' => 'El nombre comercial es requerido',
+                'telefono.required' => 'El telefono es requerido',
+            ]
+
+        );
 
         try {
-           /* if ($request->hasFile('logo')) {
+            // Buscar la categoría por su ID
+            $empresa = Empresa::findOrFail($id);
 
-                $request->validate(
-                    [
-                        'razon_social' => 'required|string|max:455',
-                        'ruc' => 'required|unique:empresa,ruc',
-                        'descripcion' => 'required|string|max:200',
-                        'direccion' => 'required',
-                    ],
+            // Actualizar los datos de la categoría
+            $empresa->ruc = $validatedData['ruc'];
+            $empresa->razon_social = $validatedData['razon_social'];
+            $empresa->nombre_comercial = $validatedData['nombre_comercial'];
+            $empresa->telefono = $validatedData['telefono'];
+            $empresa->direccion = $request->direccion;
+            $empresa->descripcion = $request->descripcion;
+            if ($request->hasFile('logo')) {
+                // Eliminar el logo anterior si existe
+                $image = $request->file('logo');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('empresa');
+                $image->move($destinationPath, $imageName);
+                $imagePath = 'empresa/' . $imageName;
+                $empresa->logo = $imagePath;
 
-                    [
-                        'razon_social.required' => 'El campo Nombre es obligatorio',
-                        'apellidos.required' => 'El campo apellidos es obligatorio',
-                        'ruc.unique' => 'Este RUC ya se enuentra registrado',
-                        'descripcion.required' => 'El campo descripcion es requerido',
-                        'direccion.required' => 'El campo dirección es requerido',
-                    ]
-                );
-                $logo = $request->file('logo');
-                $nombrelogo = time() . '.' . $logo->getClientOriginalExtension();
-                $ruta = public_path('/empresa'); // Ruta donde deseas guardar la logo
-                $logo->move($ruta, $nombrelogo);
+                // Guardar el nuevo logo
+                //$path = $request->file('logo')->store('public/empresa');
+               // $empresa->logo = $path;
+            }
 
+            // Actualizar más campos si es necesario
+            $empresa->save();
 
-                $empresa = Empresa::create([
-                    'razon_social' => $request->razon_social,
-                    'ruc' => $request->ruc,
-                    'descripcion' => $request->descripcion,
-                    'telefono' => $request->telefono,
-                    'direccion' => $request->direccion,
-                    'fecha_registro' => now(),
-                    'estado' => 1,
-                    'logo' => $nombrelogo,
-                ]);
-                return redirect()->route('empresa.view')->with('success', '¡La empresa se ha registrado exitosamente!');
-            }*/
-        } catch (ValidationException $e) {
-            $errors = $e->validator->errors()->toArray();
-            return redirect()->back()->withInput($request->all())->withErrors($errors);
+            // Retornar respuesta JSON con los datos actualizados
+            return response()->json([
+                'message' => 'Empresa actualizada exitosamente.',
+                'empresa' => $empresa
+            ]);
+        } catch (\Exception $e) {
+            // Manejar cualquier error y devolver una respuesta de error
+            return response()->json([
+                'errors' => 'Error al actualizar la Empresa.' . $e->getMessage(),
+            ], 422);
         }
     }
 }

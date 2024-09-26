@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Compra;
+use App\Models\Empresa;
 use App\Models\Instalacion;
 use App\Models\Pago;
 use App\Models\PagoPendiente;
@@ -28,9 +30,32 @@ class DashboardController extends Controller
         $fechaFin_m = Carbon::now()->endOfMonth(); // Fin del mes actual
         $ingresosHoy = Pos::whereDate('fecha', $fechaHoy)->whereYear('fecha', $añoActual);
         $ingresosmesActual = Pos::whereMonth('fecha', $mesActual)->whereYear('fecha', $añoActual);
+        $comprasamesActual = Compra::whereMonth('fecha', $mesActual)->whereYear('fecha', $añoActual);
         $clientes = Cliente::get();
         $pagosUltimasemana = Pos::select(DB::raw('DATE(fecha) as fecha'), DB::raw('SUM(total) as total'))
             ->whereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->groupBy(DB::raw('DATE(fecha)'))
+            ->orderBy('fecha', 'asc')
+            ->get();
+        $comprasUltimasemana = Compra::select(DB::raw('DATE(fecha) as fecha'), DB::raw('SUM(total) as total'))
+            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->groupBy(DB::raw('DATE(fecha)'))
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        $fechaInicio_x = Carbon::now()->subDays(29)->startOfDay();
+        $fechaFin_x = Carbon::now()->endOfDay();
+
+        // Obtener pagos de los últimos 30 días incluyendo hoy
+        $pagosUltimomes = Pos::select(DB::raw('DATE(fecha) as fecha'), DB::raw('SUM(total) as total'))
+            ->whereBetween('fecha', [$fechaInicio_x, $fechaFin_x])
+            ->groupBy(DB::raw('DATE(fecha)'))
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        // Obtener compras de los últimos 30 días incluyendo hoy
+        $comprasUltimomes = Compra::select(DB::raw('DATE(fecha) as fecha'), DB::raw('SUM(total) as total'))
+            ->whereBetween('fecha', [$fechaInicio_x, $fechaFin_x])
             ->groupBy(DB::raw('DATE(fecha)'))
             ->orderBy('fecha', 'asc')
             ->get();
@@ -41,6 +66,18 @@ class DashboardController extends Controller
             ->orderBy('year')
             ->orderBy('month')
             ->get();
+
+        $comprasUltimosDoceMeses = Compra::select(DB::raw('YEAR(fecha) as year'), DB::raw('MONTH(fecha) as month'), DB::raw('SUM(total) as total'))
+            ->whereBetween('fecha', [$fechaInicio_m, $fechaFin_m])
+            ->groupBy(DB::raw('YEAR(fecha)'), DB::raw('MONTH(fecha)'))
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+
+
+        //RENTABILIDAD
+//$rentabilidadHoy=Pos::where()->get();
 
         $productosVendidos = DB::table('detalle_venta')
             ->join('producto', 'detalle_venta.producto_id', '=', 'producto.id')
@@ -73,6 +110,9 @@ class DashboardController extends Controller
             ->get();
         $productos = Producto::all();
 
+
+        $empresa = Empresa::first(); // Obtener la primera empresa
+
         return view('dashboard', compact(
             'ingresosHoy',
             'ingresosmesActual',
@@ -82,7 +122,13 @@ class DashboardController extends Controller
             'pagosUltimosDoceMeses',
             'productosVendidos',
             'topClientes',
-            'productos'
+            'productos',
+            'comprasamesActual',
+            'empresa',
+            'comprasUltimasemana',
+            'comprasUltimosDoceMeses',
+            'pagosUltimomes',
+            'comprasUltimomes'
         ));
 
         // Obtén el mes y el año actuales

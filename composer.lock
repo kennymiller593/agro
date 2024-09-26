@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30f285113fdff7ef83847f561a9dec49",
+    "content-hash": "0e22c5378d299e6e19b0f6336aac695f",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -897,57 +897,6 @@
             "time": "2022-07-30T15:56:11+00:00"
         },
         {
-            "name": "greenter/core",
-            "version": "v5.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/core.git",
-                "reference": "5a13c1c7627f95c93c909531f5ed9f0b6b64a459"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/core/zipball/5a13c1c7627f95c93c909531f5ed9f0b6b64a459",
-                "reference": "5a13c1c7627f95c93c909531f5ed9f0b6b64a459",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/Core/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
-                }
-            ],
-            "description": "Greenter Core",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "sunat"
-            ],
-            "support": {
-                "forum": "https://community.greenter.dev/",
-                "source": "https://github.com/thegreenter/core/tree/v5.0.3"
-            },
-            "time": "2023-01-11T17:16:15+00:00"
-        },
-        {
             "name": "greenter/gre-api",
             "version": "v1.0.2",
             "source": {
@@ -1004,223 +953,72 @@
             "time": "2023-01-13T21:00:27+00:00"
         },
         {
-            "name": "greenter/htmltopdf",
-            "version": "v5.0.3",
+            "name": "greenter/greenter",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thegreenter/htmltopdf.git",
-                "reference": "a6af030e2094779825472bcc1e0a661a581c05a4"
+                "url": "https://github.com/thegreenter/greenter.git",
+                "reference": "5655e6f96a205c06c82daba5fad8633527a584f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/htmltopdf/zipball/a6af030e2094779825472bcc1e0a661a581c05a4",
-                "reference": "a6af030e2094779825472bcc1e0a661a581c05a4",
-                "shasum": ""
-            },
-            "require": {
-                "greenter/core": "^5.0",
-                "mikehaertl/phpwkhtmltopdf": "^2.4",
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9"
-            },
-            "suggest": {
-                "greenter/report": "Html Reporter"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
-                }
-            ],
-            "description": "Greenter Html Report to Pdf using wkhtmltopdf",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "sunat"
-            ],
-            "support": {
-                "forum": "https://community.greenter.dev/",
-                "source": "https://github.com/thegreenter/htmltopdf/tree/v5.0.3"
-            },
-            "time": "2023-01-11T17:16:13+00:00"
-        },
-        {
-            "name": "greenter/lite",
-            "version": "v5.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/lite.git",
-                "reference": "3cbf097921696eacbffe12fdd05e5fc40e226a69"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/lite/zipball/3cbf097921696eacbffe12fdd05e5fc40e226a69",
-                "reference": "3cbf097921696eacbffe12fdd05e5fc40e226a69",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "greenter/core": "^5.0",
-                "greenter/ws": "^5.0",
-                "greenter/xml": "^5.0",
-                "greenter/xmldsig": "^5.0",
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/Greenter/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
-                }
-            ],
-            "description": "Greenter lite version",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "sunat",
-                "xml"
-            ],
-            "support": {
-                "forum": "https://community.greenter.dev/",
-                "issues": "https://github.com/thegreenter/lite/issues",
-                "source": "https://github.com/thegreenter/lite/tree/v5.0.3"
-            },
-            "time": "2023-05-03T05:20:55+00:00"
-        },
-        {
-            "name": "greenter/report",
-            "version": "v5.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/report.git",
-                "reference": "aca682116b7803b92bb7cdad908006874f94d965"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/report/zipball/aca682116b7803b92bb7cdad908006874f94d965",
-                "reference": "aca682116b7803b92bb7cdad908006874f94d965",
+                "url": "https://api.github.com/repos/thegreenter/greenter/zipball/5655e6f96a205c06c82daba5fad8633527a584f6",
+                "reference": "5655e6f96a205c06c82daba5fad8633527a584f6",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",
-                "greenter/core": "^5.0",
+                "greenter/gre-api": "^1.0",
+                "greenter/xmldsig": "^5.0",
+                "mikehaertl/phpwkhtmltopdf": "^2.4",
+                "nelexa/zip": "^4.0",
                 "php": ">=7.4",
+                "symfony/validator": "^5.0 || ^6.0",
                 "twig/twig": "~3.0"
             },
-            "require-dev": {
-                "greenter/data": "^5.0",
-                "phpunit/phpunit": "^9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
-                }
-            ],
-            "description": "Representacion Impresa para Facturacion Electrónica SUNAT - Perú",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "pdf",
-                "sunat"
-            ],
-            "support": {
-                "forum": "https://community.greenter.dev/",
-                "source": "https://github.com/thegreenter/report/tree/v5.0.3"
-            },
-            "time": "2023-12-06T17:10:44+00:00"
-        },
-        {
-            "name": "greenter/ws",
-            "version": "v5.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/ws.git",
-                "reference": "1bba7a82658235baa009d3a8a17ebf65011ad48e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/ws/zipball/1bba7a82658235baa009d3a8a17ebf65011ad48e",
-                "reference": "1bba7a82658235baa009d3a8a17ebf65011ad48e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-soap": "*",
-                "ext-zlib": "*",
-                "greenter/core": "^5.0",
-                "greenter/gre-api": "^1.0",
-                "nelexa/zip": "^4.0",
-                "php": ">=7.4"
+            "replace": {
+                "greenter/core": "self.version",
+                "greenter/cpe-validator": "self.version",
+                "greenter/data": "self.version",
+                "greenter/htmltopdf": "self.version",
+                "greenter/lite": "self.version",
+                "greenter/report": "self.version",
+                "greenter/validator": "self.version",
+                "greenter/ws": "self.version",
+                "greenter/xcodes": "self.version",
+                "greenter/xml": "self.version",
+                "greenter/xml-parser": "self.version"
             },
             "require-dev": {
+                "greenter/ubl-validator": "^2.0",
                 "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^9"
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9",
+                "vimeo/psalm": "~5.10.0"
             },
             "suggest": {
-                "ext-curl": "Necesario para enviar guia de remision"
+                "ext-curl": "For ws package (GRE)",
+                "ext-dom": "For xml, xml-parser, cpe-validator, ws package",
+                "ext-soap": "For ws package",
+                "ext-xsl": "For cpe-validator package",
+                "ext-zlib": "For ws package"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "Greenter\\": "src/"
+                    "Greenter\\": [
+                        "packages/core/src/Core/",
+                        "packages/cpe-validator/src/",
+                        "packages/data/src/",
+                        "packages/htmltopdf/src/",
+                        "packages/lite/src/Greenter/",
+                        "packages/report/src/",
+                        "packages/validator/src/",
+                        "packages/ws/src/",
+                        "packages/xcodes/src/",
+                        "packages/xml-parser/src/",
+                        "packages/xml/src/"
+                    ]
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1233,78 +1031,26 @@
                     "email": "giansalex@gmail.com"
                 }
             ],
-            "description": "WebServices Sunat Facturación Electrónica - Perú",
+            "description": "Facturacion Electrónica SUNAT en Perú",
             "homepage": "https://greenter.dev/",
             "keywords": [
                 "facturacion-electronica",
                 "greenter",
-                "soap",
+                "peru",
                 "sunat"
             ],
             "support": {
                 "forum": "https://community.greenter.dev/",
-                "source": "https://github.com/thegreenter/ws/tree/v5.0.3"
+                "issues": "https://github.com/thegreenter/greenter/issues",
+                "source": "https://github.com/thegreenter/greenter/tree/v5.1.0"
             },
-            "time": "2023-05-03T05:20:55+00:00"
-        },
-        {
-            "name": "greenter/xml",
-            "version": "v5.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/xml.git",
-                "reference": "a8e37ccd5f895b8ba952d006e193c1e519f8fd8f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/xml/zipball/a8e37ccd5f895b8ba952d006e193c1e519f8fd8f",
-                "reference": "a8e37ccd5f895b8ba952d006e193c1e519f8fd8f",
-                "shasum": ""
-            },
-            "require": {
-                "greenter/core": "^5.0",
-                "php": ">=7.4",
-                "twig/twig": "~3.0"
-            },
-            "require-dev": {
-                "greenter/data": "^5.0",
-                "greenter/ubl-validator": "^2.0",
-                "phpunit/phpunit": "^9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
+            "funding": [
                 {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
+                    "url": "https://yape.greenter.dev/",
+                    "type": "yape"
                 }
             ],
-            "description": "XML generación de documentos electrónicos, Facturacion Electrónica SUNAT - Perú",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "sunat",
-                "xml"
-            ],
-            "support": {
-                "forum": "https://community.greenter.dev/",
-                "source": "https://github.com/thegreenter/xml/tree/v5.0.3"
-            },
-            "time": "2023-12-15T15:27:44+00:00"
+            "time": "2024-07-27T15:08:19+00:00"
         },
         {
             "name": "greenter/xmldsig",
@@ -6062,6 +5808,82 @@
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
+            "name": "symfony/polyfill-php83",
+            "version": "v1.31.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php83.git",
+                "reference": "2fb86d65e2d424369ad2905e83b236a8805ba491"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/2fb86d65e2d424369ad2905e83b236a8805ba491",
+                "reference": "2fb86d65e2d424369ad2905e83b236a8805ba491",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php83\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.3+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.31.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-09-09T11:45:10+00:00"
+        },
+        {
             "name": "symfony/polyfill-uuid",
             "version": "v1.27.0",
             "source": {
@@ -6715,6 +6537,102 @@
                 }
             ],
             "time": "2022-10-09T08:55:40+00:00"
+        },
+        {
+            "name": "symfony/validator",
+            "version": "v6.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/validator.git",
+                "reference": "15fe2c6ed815b06b6b8636d8ba3ef9807ee1a75c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/15fe2c6ed815b06b6b8636d8ba3ef9807ee1a75c",
+                "reference": "15fe2c6ed815b06b6b8636d8ba3ef9807ee1a75c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php83": "^1.27",
+                "symfony/translation-contracts": "^2.5|^3"
+            },
+            "conflict": {
+                "doctrine/annotations": "<1.13",
+                "doctrine/lexer": "<1.1",
+                "symfony/dependency-injection": "<5.4",
+                "symfony/expression-language": "<5.4",
+                "symfony/http-kernel": "<5.4",
+                "symfony/intl": "<5.4",
+                "symfony/property-info": "<5.4",
+                "symfony/translation": "<5.4",
+                "symfony/yaml": "<5.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.13|^2",
+                "egulias/email-validator": "^2.1.10|^3|^4",
+                "symfony/cache": "^5.4|^6.0|^7.0",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/expression-language": "^5.4|^6.0|^7.0",
+                "symfony/finder": "^5.4|^6.0|^7.0",
+                "symfony/http-client": "^5.4|^6.0|^7.0",
+                "symfony/http-foundation": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "symfony/intl": "^5.4|^6.0|^7.0",
+                "symfony/mime": "^5.4|^6.0|^7.0",
+                "symfony/property-access": "^5.4|^6.0|^7.0",
+                "symfony/property-info": "^5.4|^6.0|^7.0",
+                "symfony/translation": "^5.4|^6.0|^7.0",
+                "symfony/yaml": "^5.4|^6.0|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Validator\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides tools to validate values",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/validator/tree/v6.4.2"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-12-29T16:34:12+00:00"
         },
         {
             "name": "symfony/var-dumper",

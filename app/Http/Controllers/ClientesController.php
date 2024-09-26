@@ -29,20 +29,11 @@ class ClientesController extends Controller
         ->get();
         return view('clientes', compact('instalaciones'));*/
         // return view('clientes');
-        if ($request->ajax()) {
+        $clientes = Cliente::all();
 
-            $instalaciones = Instalacion::with(['cliente', 'plan', 'zona'])->orderBy('id', 'desc')->get();
-            return response()->json(['data' => $instalaciones]);
-        }
-
-        return view('clientes');
+        return view('clientes.listar', compact('clientes'));
     }
-    public function formCreate()
-    {
-        $planes = Plan::all();
-        $zonas = Zona::all();
-        return view('clientes.create', compact('planes', 'zonas'));
-    }
+    public function formCreate() {}
     public function consultaDni(Request $request)
     {
         $token = 'apis-token-7458.pQVW2cM9kp13YeuCQg0ulFYypUxgSynP';
@@ -118,47 +109,105 @@ class ClientesController extends Controller
             'cliente_id' => $nuevoCliente->id
         ]);
     }
-    public function saveInstalacion(Request $request)
+    public function registrarCliente(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'numero' => 'required|numeric|min:0|unique:cliente,num_doc',
+                'rs' => 'required',
+            ],
+            [
+                'numero.required' => 'Ingrese número',
+                'numero.numeric' => 'El campo número debe ser un valor numérico',
+                'numero.unique' => 'El número ya se encuentra registrado',
+                'rs.required' => 'El nombre es obligatorio',
+            ]
+        );
+
+        try {
+            $proveedor = Cliente::create([
+                'nombres' => $request->nombres,
+                'apellidos' => $request->apellidos,
+                'tipo_persona' => $request->tipo_doc == '1' ? 'Natural' : ($request->tipo_doc == '2' ? 'Jurídica' : null),
+                'tipo_doc' => $request->tipo_doc,
+                'num_doc' => $request->numero,
+                'direccion' => $request->direccion,
+                'telefono' => $request->telefono,
+                // Otros campos según sea necesario
+            ]);
+
+            return redirect()->back()->with('message', 'Proveedor agregado con éxito');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al registrar'])->withInput();
+        }
+    }
+    public function edit($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        return response()->json($cliente);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'numeroE' => 'required|string',
+                'rsE' => 'required|string',
+            ],
+            [
+                'numeroE.required' => 'Ingrese número',
+                'numeroE.numeric' => 'El campo número debe ser un valor numérico',
+                'numeroE.min' => 'El número debe ser igual o mayor que 0',
+                'rsE.required' => 'El nombre es obligatorio',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            // Buscar el proveedor por ID
+            $proveedor = Cliente::findOrFail($request->idE);
+
+            // Actualizar los datos
+            $proveedor->update([
+                'nombres' => $request->nombresE,
+                'apellidos' => $request->apellidosE,
+                'tipo_persona' => $request->tipo_docE == '1' ? 'Natural' : ($request->tipo_docE == '2' ? 'Jurídica' : null),
+                'tipo_doc' => $request->tipo_docE,
+                'num_doc' => $request->numeroE,
+                'direccion' => $request->direccionE,
+                'telefono' => $request->telefonoE,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Cliente actualizado correctamente'
+            ]);
+        } catch (\Exception $e) {
+            // Manejar cualquier error durante la actualización
+            return response()->json([
+                'success' => false,
+                'errors' => ['general' => 'Error al actualizar el cliente']
+            ], 500);
+        }
+    }
+
+    public function destroy(Request $request)
     {
         try {
-            $request->validate(
-                [
-                    'ip' => 'required|string|max:255',
-                    'direccion' => 'required|string|max:255',
-                    'url_maps' => 'required|string|max:255',
-                    'fecha_inst' => 'required',
-                    'dia_cobro' => 'required',
+            $cliente = Cliente::findOrFail($request->cliente_id);
+            $cliente->delete();
 
-                ],
-
-                [
-                    'ip.required' => 'El campo ip es obligatorio',
-                    'direccion.required' => 'El campo direccion es obligatorio',
-                    'url_maps.required' => 'El campo url es requerido',
-                    'fecha_inst.required' => 'Complete este campo',
-                    'dia_cobro.required' => 'Complete este campo',
-                ]
-            );
-            $nuevoCliente = Instalacion::create([
-                'cliente_id' => $request->cliente_id,
-                'plan_id' => $request->plan_id,
-                'fecha_instalacion' =>  $request->fecha_inst,
-                'dia_cobro' => $request->dia_cobro,
-                'zona_id' => $request->zona_id,
-                'router_id' => $request->router_id,
-                'users_id' => 1,
-                'ip' => $request->ip,
-                'url_maps' => $request->url_maps,
-                'distrito' => $request->distrito,
-                'direccion' => $request->direccion,
-                'descripcion' => $request->descripcion,
-                'estado' => 'Activo',
-            ]);
-            Session::flush();
-            return redirect()->route('clientes.index');
-        } catch (ValidationException $e) {
-            $errors = $e->validator->errors()->toArray();
-            return redirect()->back()->withInput($request->all())->withErrors($errors);
+            return redirect()->back()->with('message', 'Cliente eliminado con éxito');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al eliminar el cliente']);
         }
     }
 }

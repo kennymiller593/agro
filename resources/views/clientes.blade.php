@@ -1,311 +1,307 @@
 @extends('admin-layout')
 @section('content')
     <!-- CSS de DataTables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!-- CSS de DataTables en español -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json">
-
-
-    <!-- JavaScript de jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- JavaScript de DataTables -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div id="content" class="bg-white/10 col-span-9 rounded-lg p-6">
-        <div class="w-full ">
-            <div class="bg-white shadow-md rounded pt-2 pl-2 pr-2 ">
+        <div id="24h">
 
-                <button type="button"
-                    class=" bg-indigo-400 h-max w-max rounded-lg text-white font-bold hover:bg-indigo-300 " disabled>
+            <div id="stats" class="grid gird-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                    <a href="{{ route('client.create') }}">
-                        <div class="flex items-center justify-center m-[10px]">
-                            Agregar
+
+                <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
+                    Balance
+                    <div>
+                        <canvas id="balanceChart"></canvas>
+                    </div>
+                    <div class=" text-lg sm:text-base">
+                        <div class="flex items-left justify-between  ">
+                            <span class=" w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
+                            <span>Totales</span>
+                            <span class="ml-2 text-blue-500 font-bold">S/ {{ $ingresosmesActual->sum('total') }}</span>
                         </div>
-                    </a>
-                </button>
+                        <div class="flex items-left justify-between ">
+                            <span class=" w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+                            <span>Total pagos</span>
+                            <span class="ml-2 text-red-500 font-bold">S/ 116.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white  border border-gray-100  shadow-md shadow-black/5 p-6 rounded-lg sm:text-base">
+                    <div class="flex flex-row space-x-4 items-center border border-gray-100   p-6">
+                        <div id="stats-1 sm:hidden xl-hidden lg-hidden xs:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-10 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <a href="{{ route('verComprobante', ['date' => date('Y-m-d')]) }}">
+                                <p class="text-teal-300 text-sm font-medium uppercase leading-4">Ventas hoy</p>
+                                <p class="text-gray-600 font-bold xs:text-1xl inline-flex items-center space-x-2">
+                                    <span>s/{{ $ingresosHoy->sum('total') }}</span>
+
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex flex-row space-x-4 items-center border border-gray-100   p-6">
+                        <div id="stats-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-10 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <a href="{{ route('verComprobante', ['month' => date('Y-m')]) }}">
+                                <p class="text-teal-300 text-sm font-medium uppercase leading-4 xs:text-1xl">Ventas
+                                    {{ $nombreMesActual }}
+                                </p>
+                                <p class="text-gray-600 font-bold xs:text-1xl inline-flex items-center space-x-2">
+                                    <span>s/{{ $ingresosmesActual->sum('total') }}</span>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row space-x-4 items-center border border-gray-100   p-6">
+                        <div id="stats-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-10 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-indigo-300 text-sm font-bold uppercase leading-4 xs:text-1xl">Total Clientes </p>
+                            <p class="text-gray-600 font-bold  inline-flex items-center space-x-2 xs:text-1xl">
+                                <span>+{{ count($clientes) }}</span>
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-row space-x-4 items-center border border-gray-100   p-6">
+                        <div id="stats-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-10 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-indigo-300 text-sm font-bold uppercase leading-4 xs:text-1xl">Productos </p>
+                            <p class="text-gray-600 font-bold inline-flex items-center space-x-2 xs:text-1xl">
+                                <span>+{{ count($productos) }}</span>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white  border border-gray-100 p-6 shadow-md shadow-black/5  rounded-lg">
+
+                    Utilidades/Ganancias
+                    <div>
+                        <canvas id="balanceChart1"></canvas>
+                    </div>
+                    <div class=" text-lg">
+                        <div class="flex items-left justify-between ">
+                            <span class=" w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
+                            <span>Ingreso</span>
+                            <span class="ml-2 text-blue-500 font-bold">S/ {{ $ingresosmesActual->sum('total') }}</span>
+                        </div>
+                        <div class="flex items-left justify-between ">
+                            <span class=" w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+                            <span>Egreso</span>
+                            <span class="ml-2 text-red-500 font-bold">S/ 116.00</span>
+                        </div>
+                    </div>
+
+                </div>
 
 
-                <table id="example1" class="min-w-max w-full table-auto">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="text-left py-3 px-2 rounded-l-lg">Id</th>
-                            <th class="text-left py-3 px-2 ">Cliente</th>
 
-                            <th class="text-left py-3 px-2">DNI</th>
-                            <th class="text-left py-3 px-2">Celular</th>
-                            <th class="text-left py-3 px-2">Fecha Instalacion</th>
-                            <th class="text-left py-3 px-2">Dia de cobro</th>
-                            <th class="text-left py-3 px-2">Plan</th>
-                            <th class="text-left py-3 px-2">Zona</th>
-                            <th class="text-left py-3 px-2">Ip</th>
-                            <th class="text-left py-3 px-2 rounded-r-lg">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
-                    </tbody>
-                </table>
             </div>
         </div>
+        <div id="last-incomes">
+            <h1 class="font-bold py-4 uppercase">Gráficas</h1>
+            <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-4">
+                <div class="bg-white border border-gray-100 p-6 shadow-md shadow-black/5 rounded-lg">
+                    <canvas id="graficoPagoSemana"></canvas>
+                </div>
+                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ">
+                    <canvas id="graficoPagoAnual"></canvas>
 
+                </div>
+
+
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div id="last-users">
+                <h1 class="font-bold py-4 uppercase"> Top Productos</h1>
+                <div class="overflow-x-scroll  mx-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <th class="text-left py-3 px-2 rounded-l-lg">Producto</th>
+                            <th class="text-left py-3 px-2">Cantidad</th>
+                            <th class="text-left py-3 px-2">Total</th>
+
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            @foreach ($productosVendidos as $vendido)
+                                <tr class="border-b ">
+                                    <td class="py-3 px-2">{{ $vendido->nombre }}</td>
+                                    <td class="py-3 px-2">{{ $vendido->total_cantidad }} {{ $vendido->simbolo_sunat }}
+                                    </td>
+                                    <td class="py-3 px-2">s/ {{ number_format($vendido->total_monto, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="last-users">
+                <h1 class="font-bold py-4 uppercase"> Top Clientes</h1>
+                <div class="overflow-x-scroll  mx-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <th class="text-left py-3 px-2 rounded-l-lg">Cliente</th>
+                            <th class="text-left py-3 px-2"># Trans.</th>
+                            <th class="text-left py-3 px-2">Total</th>
+
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            @foreach ($topClientes as $cliente)
+                                <tr class="border-b ">
+                                    <td class="py-3 px-2">{{ $cliente->nombres }} {{ $cliente->apellidos }}</td>
+                                    <td class="py-3 px-2"> {{ $cliente->total_compras }}
+                                    </td>
+                                    <td class="py-3 px-2">s/ {{ number_format($cliente->monto_total, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <dialog id="myModal" class=" w-11/12 md:w-1/2 p-5  bg-white rounded-md ">
-        <div class="flex flex-col w-full  ">
-            <!-- Header -->
-            <div class="flex w-full h-auto justify-center items-center">
-                <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold" id="num_boleta">
-
-                </div>
-                <div onclick="document.getElementById('myModal').close();"
-                    class="flex w-1/12 h-auto justify-center cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-x">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </div>
-                <!--Header End-->
-            </div>
-            <!-- Modal Content-->
-            <!--Body-->
-            <div class="my-5 mr-5 ml-5 flex justify-center">
-                <form action="" id="formularioPendiente" method="POST">
-                    @csrf
-                    <div class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <input type="text" id="instalacion_id" name="instalacion_id" hidden>
-                        <div class="">
-                            <label for="names" class="text-md text-gray-600">Cliente</label>
-                            <input type="text" id="txt_data_cliente" autocomplete="off" name="txt_data_cliente"
-                                class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md" disabled
-                                placeholder="Jhon Does">
-                        </div>
-                        <div class="">
-                            <label for="phone" class="text-md text-gray-600">Fecha de pago</label>
-                            <input type="datetime-local" id="txt_fecha_pago" autocomplete="off" name="txt_fecha_pago"
-                                class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md"
-                                value="{{ now()->format('Y-m-d\TH:i') }}">
-                        </div>
-                        <div class="">
-                            <label for="id_number" class="text-md text-gray-600">Fecha de vencimiento</label>
-
-                            <input type="datetime-local" id="txt_fecha_vencimiento" autocomplete="off"
-                                name="txt_fecha_vencimiento" class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md"
-                                value="{{ now()->format('Y-m-d\TH:i') }}">
-                        </div>
-                    </div>
-                    <div class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="">
-                            <label for="id_number" class="text-md text-gray-600">Cantidad</label>
-
-                            <input type="number" id="cantidad" autocomplete="off" name="cantidad"
-                                class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md" placeholder="1"
-                                value="1">
-                        </div>
-                        <div class="">
-                            <label for="id_number" class="text-md text-gray-600">Descripción</label>
-                            <textarea
-                                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm shadow-blue-500 ring-1 ring-inset ring-blue-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
-                                id="descripcion" name="descripcion" rows="2" placeholder=""></textarea>
-                        </div>
-                        <div class="">
-                            <label for="id_number" class="text-md text-gray-600">Precio</label>
-                            <input type="number" id="monto_ind" autocomplete="off" name="monto_ind"
-                                class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md" placeholder="20">
-                        </div>
-                        <div class="">
-                            <label for="id_number" class="text-md text-gray-600">Total</label>
-                            <input type="number" id="monto" autocomplete="off" name="monto"
-                                class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md" placeholder="20">
-                        </div>
-                    </div>
-                    <div class='flex items-center justify-center'>
-                        <button type="button" id="botonProcesarPendiente"
-                            class="bg-indigo-400 h-max w-max rounded-lg text-white font-bold hover:bg-indigo-300 ">
-                            <div class="flex items-center justify-center m-[10px]">
-
-                                <div class="ml-2"> Generar<div>
-                                    </div>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <!-- End of Modal Content-->
-        </div>
-    </dialog>
-    <!-- DataTables  & Plugins -->
-
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-    <style>
-        input[type="search"] {
-            outline: none;
-            border: 1px solid #107C41;
-            /* Establece un borde sólido de 1 píxel con el color deseado */
-            border-radius: 4px;
-            /* Opcional: agrega esquinas redondeadas al borde */
-        }
-
-
-
-        .buttons-colvis {}
-
-        .dataTables_wrapper {
-            padding-top: 4px;
-        }
-
-        .buttons-csv {
-            background-color: #107C41;
-            color: white;
-            border-radius: 2px;
-
-        }
-
-        .buttons-excel {
-            background-color: #107C41;
-            color: white;
-            border-radius: 2px;
-
-        }
-
-        .buttons-pdf {
-            background-color: #B30B00;
-            color: white;
-            border-radius: 2px;
-
-        }
-    </style>
     <script>
-        document.getElementById('botonProcesarPendiente').addEventListener('click', function() {
-            // Obtener los datos del formulario
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var formData = new FormData(document.getElementById('formularioPendiente'));
-            formData.append('_token', csrfToken);
-            fetch("/crear-pendientes", {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
+        var ctx = document.getElementById('balanceChart1').getContext('2d');
+        var balanceChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Totales', 'Total pagos'],
+                datasets: [{
+                    data: [116, {{ $ingresosmesActual->sum('total') }}],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                    hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': S/ ' + tooltipItem.raw;
+                            }
+                        }
                     }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Hubo un problema al generar.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    toastr.success('La operación se realizó exitosamente', 'Bien hecho', {
-                        progressBar: true,
-                        positionClass: 'toast-top-center'
-                    });
-                    document.getElementById('myModal').close()
-                    //  $('#example1').DataTable().ajax.reload();
-                })
-                .catch(error => {
-                    console.error('Error al generar:', error);
-                });
+                }
+            }
         });
     </script>
     <script>
-        function mostrarModal(elemento) {
-            var nombre = elemento.getAttribute('data-nombre');
-            var num_boleta = elemento.getAttribute('data-id');
-            var mount = elemento.getAttribute('data-mount');
-            var inst_id = elemento.getAttribute('data-inst_id');
-            var desc = elemento.getAttribute('data-desc');
-            // Mostrar el modal y establecer el nombre en el contenido del modal
-            document.getElementById('txt_data_cliente').value = nombre;
-            document.getElementById('num_boleta').textContent = 'Recibo N° 000' + num_boleta;
-            document.getElementById('monto_ind').value = mount;
-            document.getElementById('monto').value = mount;
-
-            document.getElementById('instalacion_id').value = inst_id;
-            document.getElementById('descripcion').value = 'INTERNET ILIMITADO ' + desc;
-            document.getElementById('myModal').showModal();
-        }
+        var ctx = document.getElementById('balanceChart').getContext('2d');
+        var balanceChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Totales', 'Total pagos'],
+                datasets: [{
+                    data: [{{ $ingresosmesActual->sum('total') }}, 116],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                    hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': S/ ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     </script>
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.18/i18n/Spanish.json'
-                },
+        var ctx = document.getElementById('graficoPagoAnual').getContext('2d');
 
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                dom: 'Bfrtip',
+        var labels = {!! json_encode($pagosUltimosDoceMeses->pluck('month')) !!};
+        var data = {!! json_encode($pagosUltimosDoceMeses->pluck('total')) !!};
 
-                "buttons": ["csv", "excel", "pdf", "colvis"],
-                "ajax": {
-                    url: "{{ route('clientes.index') }}",
-                },
-                columns: [{
-                        data: 'id'
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return row.cliente.nombre + ' ' + row.cliente.apellidos;
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pagos últimos 12 meses',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
                         }
-                    },
-                    {
-                        data: 'cliente.dni'
-                    },
-                    {
-                        data: 'cliente.celular'
-                    },
-                    {
-                        data: 'fecha_instalacion'
-                    },
-                    {
-                        data: 'dia_cobro'
-                    },
-                    {
-                        data: 'plan.nombre'
-                    },
-                    {
-                        data: 'zona.nombre'
-                    },
-                    {
-                        data: 'ip'
-                    },
-                    {
-                        data: 'ip',
-                        orderable: false,
-                        searchable: false
-                    },
-                ],
-                columnDefs: [{
-                    // Definir botones de editar y eliminar en la última columna
-                    targets: -1,
-                    render: function(data, type, row) {
-                        return '<div class="inline-flex items-center space-x-3" onclick="mostrarModal(this)" id="btn" data-desc="' +
-                            row.plan.nombre + '" data-inst_id="' +
-                            row.id + '" data-mount="' +
-                            row.plan.precio + '" data-nombre="' +
-                            row.cliente.nombre + '" data-id="' +
-                            row.id +
-                            '"><a class="text-green-500 cursor-pointer" title="Generar Factura"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"> <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg></a>' +
-                            '</div>';
-                    }
-                }],
-                order: [
-                    [0, 'desc'] // Ordenar por la primera columna (ID) de forma ascendente
-                ]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('graficoPagoSemana').getContext('2d');
 
+        var labels = {!! json_encode($pagosUltimasemana->pluck('fecha')) !!};
+        var data = {!! json_encode($pagosUltimasemana->pluck('total')) !!};
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pagos últimos 7 días',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
         });
     </script>
 @endsection

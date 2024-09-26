@@ -8,27 +8,27 @@
 
 
          <!-- Botón NC -->
-         <a href="{{ route('verComprobante') }}">
+         <a href="{{ route('verComprobante', ['date' => date('Y-m-d')]) }}">
              <button
-                 class="p-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
-                 <span class="font-bold">NC</span>
+                 class="p-1 bg-indigo-300 text-white rounded-lg hover:bg-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50">
+                 <span class="font-bold">Consultar Nulidad</span>
              </button>
          </a>
          <!-- Botón POS -->
          <a href="{{ route('vender') }}" rel="noopener noreferrer">
              <button
-                 class="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-                 <span class="font-bold">POS</span>
+                 class="p-1 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                 <span class="font-bold">Venta Contado</span>
              </button>
          </a>
          <!-- Botón ME -->
          <a href="{{ route('verProducto') }}">
              <button
-                 class="p-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">
-                 <span class="font-bold">MP</span>
+                 class="p-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">
+                 <span class="font-bold">Artículos</span>
              </button>
          </a>
-       
+
      </div>
      <ul class="ml-auto flex items-center">
          <li class="mr-1 dropdown">
@@ -241,7 +241,8 @@
                      </div>
                  </div>
                  <div class="p-2 md:block text-left">
-                     <h2 class="text-sm font-semibold text-gray-800">John Doe</h2>
+                     <h2 class="text-sm font-semibold text-gray-800">{{ Auth::user()->nombres }}
+                         {{ Auth::user()->apellidos }}</h2>
                      <p class="text-xs text-gray-500">Administrator</p>
                  </div>
              </button>
@@ -255,16 +256,17 @@
                      <a href="#"
                          class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50">Settings</a>
                  </li>
-                 <li>
-                     <form method="POST" action="">
-                         <a role="menuitem"
-                             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50 cursor-pointer"
-                             onclick="event.preventDefault();
-                            this.closest('form').submit();">
-                             Log Out
-                         </a>
+                 @if (Auth::check())
+                     <form method="POST" action="{{ route('logout') }}">
+                         @csrf
+                         <button type="submit"
+                             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50 cursor-pointer w-full text-left">
+                             Cerrar sesión
+                         </button>
                      </form>
-                 </li>
+                 @else
+                 @endif
+
              </ul>
          </li>
      </ul>

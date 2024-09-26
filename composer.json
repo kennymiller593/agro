@@ -10,7 +10,8 @@
     "require": {
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "^2.2",
-        "greenter/htmltopdf": "^5.0",
+        "greenter/greenter": "^5.1",
+        "greenter/htmltopdf": "^5.1",
         "greenter/lite": "^5.0",
         "greenter/report": "^5.0",
         "guzzlehttp/guzzle": "^7.2",

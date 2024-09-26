@@ -8,36 +8,56 @@
         $total_partia = 0;
     @endphp
     @if (count($cart) > 0)
-
-        @foreach ($cart as $id => $details)
-            @php
-                $total += $details['price'] * $details['quantity'];
-                $total_partial = $details['price'] * $details['quantity'];
-            @endphp
-            <div class="flex justify-between items-center cart-item" data-id="{{ $details['id'] }}">
-                <div class="flex items-center space-x-2 uppercase text-xs">
-                    <span class="text-gray-600">{{ $details['uni_medida'] }}</span>
-                    <span id="cant">{{ $details['quantity'] }}</span>
-                    <span id="name" class="text-sm">{{ $details['name'] }}</span>
-                  
-
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span>s/ {{ $total_partial }}</span>
-                    <button class="text-gray-600 remove-from-cart">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        @endforeach
+        <table class="w-full text-xs uppercase">
+            <thead>
+                <tr class="text-left">
+                    <th class="pb-2">Cant.</th>
+                    <th class="pb-2">Uni.</th>
+                    <th class="pb-2">Prod.</th>
+                    <th class="pb-2">Precio</th>
+                    <th class="pb-2">Subtotal</th>
+                    <th class="pb-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cart as $id => $details)
+                    @php
+                        $total += $details['price'] * $details['quantity'];
+                        $total_partial = $details['price'] * $details['quantity'];
+                    @endphp
+                    <tr class="cart-item" data-id="{{ $details['id'] }}">
+                        <td class="p-2">
+                            <input type="number" min="1"
+                                class="quantity-input w-12 h-8 border rounded text-center focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                value="{{ $details['quantity'] }}" data-id="{{ $details['id'] }}">
+                        </td>
+                        <td class="p-2 text-gray-600">{{ $details['uni_medida'] }}</td>
+                        <td class="p-2">{{ $details['name'] }}</td>
+                        <td class="p-2">
+                            <input type="number" min="1"
+                                class="price-venta  w-16 h-8 border rounded text-center focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                data-id="{{ $details['id'] }}" value="{{ $details['price'] }}">
+                        </td>
+                        <td class="p-2 subtotal">s/ {{ $total_partial }}</td>
+                        <td class="p-2">
+                            <button class="text-gray-600 remove-from-cart">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @else
         <p>Tu carrito está vacío.</p>
     @endif
 </div>
+
 <!-- Footer -->
 <div class="border-t pt-4">
     <div class="flex justify-between text-sm mb-2">
@@ -48,9 +68,9 @@
         <span>DSCT:</span>
         <span>s/ 0.00</span>
     </div>
-    <div
-        class=" @if ($total > 0) bg-blue-500 process-payment @else  bg-gray-500 @endif text-white rounded-lg p-4 flex justify-between items-center ">
-        <button class="font-bold">PAGO</button>
+    <div @if ($total > 0) onclick="showmodalConfirm()" @endif
+        class=" @if ($total > 0) bg-blue-500  @else  bg-gray-500 @endif   text-white rounded-lg p-4 flex justify-between items-center ">
+        <button class="font-bold">Grabar</button>
         <span class="font-bold">S/ {{ $total }} </span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
             <path
