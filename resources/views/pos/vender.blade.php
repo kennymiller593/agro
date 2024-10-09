@@ -19,9 +19,9 @@
 
 
 
-                <div class="flex">
+                <div class="grid grid-cols-12">
                     <!-- Primera columna que ocupa el 70% -->
-                    <div class=" bg-white p-4" style="width: 80%">
+                    <div class=" bg-white py-4 md:p-4 col-span-12 sm:col-span-6 md:col-span-7 2xl:col-span-8 order-2 md:order-1" >
 
 
                         @if (session('message'))
@@ -54,7 +54,7 @@
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 overflow-auto min-h-auto max-h-[75vh]"
+                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 overflow-auto min-h-auto max-h-[75vh]"
                             id="products-container">
                             @include('pos.partial-prod', ['productos' => $productos])
                         </div>
@@ -62,9 +62,9 @@
                     </div>
 
                     <!-- Segunda columna que ocupa el 30% -->
-                    <div class="w-4/10 bg-white p-4 " style="width: 40%">
+                    <div class=" bg-white md:p-4 col-span-12 sm:col-span-6 md:col-span-5 2xl:col-span-4 order-1 md:order-2">
 
-                        <div class="bg-white shadow-md rounded-lg p-2 max-w-md mx-auto">
+                        <div class="bg-white md:shadow-md rounded-lg p-2 max-w-md mx-auto">
                             <div class="flex justify-between items-center mb-4">
                                 <select
                                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select2"
@@ -671,4 +671,10 @@
                 });
         }
     </script>
+    
+<script>
+    window.onload = function() {
+        addBgToMenuItem('ventas_vender');
+    };
+</script>
 @endsection

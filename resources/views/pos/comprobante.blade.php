@@ -13,27 +13,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <div id="content" id="content" class="bg-white/10 col-span-9 rounded-lg p-1">
         <div class="w-full ">
-            <div class="bg-white shadow-md rounded pt-1 pl-1 pr-1 ">
+            <div class="bg-white shadow-md rounded pt-1 px-4 ">
 
 
                 <h1 class="font-bold py-4 uppercase text-center">Lista de Ventas</h1>
 
-                <div class="flex flex-wrap items-center justify-between space-x-2 mb-4">
-                    <div class="flex items-center space-x-2">
+                <div class="flex flex-wrap items-center justify-between space-x-2 mb-4 px-1 md:px-0 gap-y-4">
+                    <div class="md:flex items-center md:space-x-2">
 
-                        <input type="date" id="date_from" value="{{ $startDate }}" class="px-2 py-1 border rounded"
-                            placeholder="dd/mm/aaaa">
+                        <input type="date" id="date_from" value="{{ $startDate }}" class="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 " placeholder="dd/mm/aaaa">
 
-                        <input type="date" id="date_to" value="{{ $endDate }}" class="px-2 py-1 border rounded"
-                            placeholder="dd/mm/aaaa">
-                        <button id="filter-btn"
-                            class="px-4 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Filtrar</button>
+                        <input type="date" id="date_to" value="{{ $endDate }}" class="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 " placeholder="dd/mm/aaaa">
+                        <button id="filter-btn"  class="w-full sm:w-fit px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 mt-2 md:mt-0">Filtrar</button>
                     </div>
 
                     <div class="flex items-center space-x-2">
 
                         <div id="total-sum" class="font-bold"></div>
-                        <input type="search" id="table-search" class="px-2 py-1 border rounded" placeholder="Buscar...">
+                        <input type="search" id="table-search" class="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 " placeholder="Buscar...">
                     </div>
                 </div>
 
@@ -106,13 +103,7 @@
         <!-- End of Modal Content-->
     </dialog>
     <style>
-        input[type="search"] {
-            outline: none;
-            border: 1px solid #107C41;
-            /* Establece un borde sólido de 1 píxel con el color deseado */
-            border-radius: 4px;
-            /* Opcional: agrega esquinas redondeadas al borde */
-        }
+        
 
 
 
@@ -503,4 +494,9 @@
 
         }
     </script>
+    <script>
+    window.onload = function() {
+        addBgToMenuItem('ventas_ver');
+    };
+</script>
 @endsection

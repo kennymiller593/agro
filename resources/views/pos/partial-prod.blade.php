@@ -1,16 +1,16 @@
 @if (count($productos))
     @foreach ($productos as $producto)
         <div
-            class="shadow-md hover:shadow-lg transform transition-all duration-300 p-2 flex flex-col justify-between cursor-pointer border border-gray-300 hover:bg-emerald-50">
+            class="shadow-md hover:shadow-lg transform transition-all duration-300 p-0 flex flex-col justify-between cursor-pointer border border-gray-300 hover:bg-emerald-50">
             <div class=" add-to-cart" data-id="{{ $producto->id }}">
 
                 <img src="{{ $producto->imagen }}" alt="img" class="h-30 w-30">
-                <h3 class="text-xs font-semibold uppercase text-gray-800">{{ $producto->nombre }}</h3>
-                <div class="flex justify-between items-center mt-1">
+                <h3 class="text-xs font-semibold uppercase text-gray-800 px-2 pt-2">{{ $producto->nombre }}</h3>
+                <div class="flex justify-between items-center mt-1 px-2">
                     <p class="text-gray-500 text-xs " data-stock="{{ $producto->stok }}"> {{ $producto->stok }}
-                        {{ $producto->unimedida->simbolo_sunat }}
+                        {{ $producto->unimedida->simbolo_sunat }}</p>
                     <div class=" text-xs font-bold text-blue-600 ">s/ {{ $producto->precio_venta }}</div>
-                    </p>
+                    
                 </div>
             </div>
             <div class="flex justify-between">
@@ -23,7 +23,7 @@
 
                 </div>
             </div>
-            <div class="mt-2 flex space-x-1">
+            <div class="mt-2 flex space-x-1 p-2">
                 <button class="action-button add-to-cart bg-blue-500 text-white w-full py-2 rounded hover:bg-blue-600"
                     data-id="{{ $producto->id }}">
                     Añadir

@@ -19,10 +19,10 @@
 
 
 
-                <div class="flex">
+                <div class="grid grid-cols-12">
                     <!-- Primera columna que ocupa el 70% -->
 
-                    <div class=" bg-white p-4" style="width: 50%">
+                    <div class="col-span-12 sm:col-span-6 md:col-span-7 2xl:col-span-8 order-2 md:order-1 bg-white p-4" >
                         @if (session('message'))
                             <div id="successAlert"
                                 class="font-regular relative mb-4 block w-full rounded-lg bg-green-500 p-4 text-base leading-5 text-white opacity-100 flex">
@@ -53,7 +53,7 @@
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-4 "
+                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-4 overflow-x-auto"
                             id="products-container">
 
 
@@ -63,24 +63,24 @@
                     </div>
 
                     <!-- Segunda columna que ocupa el 30% -->
-                    <div class=" bg-white p-4 " style="width: 50%">
+                    <div class=" col-span-12 sm:col-span-6 md:col-span-5 2xl:col-span-4 order-1 md:order-2 bg-white p-4 ">
 
                         <div class="bg-white shadow-md rounded-lg p-2 ">
 
-                            <div class="flex items-center space-x-2">
+                            <div class="flex flex-col items-start ">
                                 <label for="documento" class="whitespace-nowrap text-sm">Tipo Movimiento:</label>
                                 <select name="tipo_mov" id="tipo_mov"
-                                    class="tipo_mov flex-grow py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    class="tipo_mov w-full mt-2 flex-grow py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="1">Compra - Ingreso</option>
                                     <option value="2">Otros</option>
 
                                 </select>
                             </div>
-                            <div class="flex items-center space-x-2 pt-2">
+                            <div class="flex flex-col items-start pt-2">
                                 <label for="documento" class="whitespace-nowrap text-sm">Proveedor:</label>
 
                                 <select name="proveedor" id="proveedor"
-                                    class="proveedor flex-grow py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    class="proveedor mt-2 w-full flex-grow py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
 
                                     @foreach ($proveedores as $proveedor)
                                         <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
@@ -88,10 +88,10 @@
                                 </select>
                             </div>
 
-                            <div class="flex items-center space-x-2 pt-2">
+                            <div class="flex flex-col items-start pt-2">
                                 <label for="documento" class="whitespace-nowrap text-sm">Fecha compra:</label>
                                 <input type="datetime-local" id="fecha" value="{{ date('Y-m-d\TH:i') }}"
-                                    class="fecha w-full pl-4 pr-10 py-2 leading-none rounded-lg shadow-sm border focus:outline-none focus:shadow-outline text-gray-600 font-medium"
+                                    class="fecha proveedor mt-2 w-full flex-grow py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
                                     name="fecha">
                             </div>
                             <br>
@@ -346,5 +346,10 @@
         document.getElementById('closeAlertButton').addEventListener('click', function() {
             document.getElementById('successAlert').style.display = 'none';
         });
+    </script>
+    <script>
+        window.onload = function() {
+            addBgToMenuItem('compras_nuevacompra');
+        };
     </script>
 @endsection

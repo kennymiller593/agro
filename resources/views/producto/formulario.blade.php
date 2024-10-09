@@ -2,7 +2,7 @@
 
 
 <!-- Item List -->
-<div class="space-y-2 mb-4">
+<div class="space-y-2 mb-4 overflow-x-auto">
     @php
         $total = 0;
         $total_partia = 0;

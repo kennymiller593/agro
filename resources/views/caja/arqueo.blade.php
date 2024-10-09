@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <div id="content" id="content" class="bg-white/10 col-span-9 rounded-lg p-0">
         <div class="w-full ">
-            <div class="bg-white shadow-md rounded pt-1 pl-1 pr-1 ">
+            <div class="bg-white shadow-md rounded p-4 ">
 
                 <button type="button" class=" bg-sky-300 h-max w-max rounded-lg text-white font-bold hover:bg-sky-500"
                     disabled>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 @endif
-                <div class="content-caja pt-2" id="content-caja">
+                <div class="content-caja pt-2 overflow-x-auto" id="content-caja">
                     @include('caja.table', [
                         'egresos' => $egresos,
                         'ingresos' => $ingresos,
@@ -386,4 +386,5 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
+     
 @endsection

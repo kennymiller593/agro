@@ -3,7 +3,7 @@
      <button type="button" class="text-lg text-gray-900 font-semibold sidebar-toggle">
          <i class="ri-menu-line"></i>
      </button>
-     <div class="flex space-x-2">
+     <div class="flex space-x-2 hidden md:block px-4">
          <!-- Botón Imprimir -->
 
 

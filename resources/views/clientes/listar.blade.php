@@ -14,7 +14,7 @@
 
     <div id="content" id="content" class="bg-white/10 col-span-9 rounded-lg p-0">
         <div class="w-full ">
-            <div class="bg-white shadow-md rounded pt-1 pl-1 pr-1 ">
+            <div class="bg-white shadow-md rounded p-4">
 
                 <button type="button" class=" bg-green-300 h-max w-max rounded-lg text-white font-bold hover:bg-green-500 "
                     disabled>
@@ -494,5 +494,10 @@
                 }
             });
         });
+    </script>
+    <script>
+        window.onload = function() {
+            addBgToMenuItem('listar_clientes');
+        };
     </script>
 @endsection

@@ -59,8 +59,7 @@
         </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div
-            class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
+        <div class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-white  w-full shadow-lg rounded">
             <div class="rounded-t mb-0 px-0 border-0">
                 <canvas id="graficoPagoSemana"></canvas>
             </div>
@@ -374,5 +373,10 @@
                 }
             }
         });
+    </script>
+    <script>
+        window.onload = function() {
+            addBgToMenuItem('menu_dashboard');
+        };
     </script>
 @endsection
